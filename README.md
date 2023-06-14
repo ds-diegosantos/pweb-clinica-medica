@@ -20,6 +20,10 @@ A documentação das funcionalidades da aplicação pode ser acessada neste link
 
 ---
 
+## 📫 Configurações postman
+
+Os endpoints da aplicação já estão configurados. Basta importar o arquivo ``postman-config/Consultório.postman_collection.json``
+
 ## 🛠 Tecnologias
 
 As seguintes tecnologias foram utilizadas no desenvolvimento da API Rest do projeto:

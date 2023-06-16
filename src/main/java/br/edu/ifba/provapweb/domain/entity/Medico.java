@@ -2,10 +2,7 @@ package br.edu.ifba.provapweb.domain.entity;
 
 import br.edu.ifba.provapweb.domain.dto.request.MedicoCreateRequest;
 import br.edu.ifba.provapweb.domain.enums.Especialidade;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,14 +22,11 @@ public class Medico {
 	private String telefone;
 	@Enumerated(EnumType.STRING)
 	private Especialidade especialidade;
+	@Embedded
+	private Endereco endereco;
 	private boolean ativo;
 
 	public Medico(MedicoCreateRequest dto) {
-		this(dto.crm(), dto.nome(), dto.email(), dto.telefone(), dto.especialidade());
-	}
-
-	public Medico(String crm, String nome, String email, String telefone,
-								Especialidade especialidade) {
-		this(crm, nome, email, telefone, especialidade, true);
+		this(dto.crm(), dto.nome(), dto.email(), dto.telefone(), dto.especialidade(),new Endereco(dto.endereco()),true);
 	}
 }

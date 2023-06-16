@@ -1,5 +1,8 @@
 package br.edu.ifba.provapweb.controller;
 
+import br.edu.ifba.provapweb.domain.dto.response.MedicoResponse;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +23,7 @@ import br.edu.ifba.provapweb.domain.dto.request.PacienteCreateRequest;
 import br.edu.ifba.provapweb.domain.dto.request.PacienteUpdateRequest;
 import br.edu.ifba.provapweb.domain.dto.response.PacienteResponse;
 import br.edu.ifba.provapweb.service.PacienteService;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/paciente")
@@ -29,10 +33,14 @@ public class PacienteController {
 	private PacienteService pacienteService;
 
 	@PostMapping
-	public ResponseEntity<Void> postPaciente(@RequestBody PacienteCreateRequest request) {
+	@Transactional
+	public ResponseEntity<PacienteResponse> postPaciente(@RequestBody @Valid PacienteCreateRequest request, UriComponentsBuilder uriBuilder) {
+
+		var paciente = pacienteService.cadastrarPaciente(request);
+		var uri = uriBuilder.path("/paciente/{crm}").buildAndExpand(paciente.cpf()).toUri();
 		return ResponseEntity
-				.status(HttpStatus.CREATED)
-				.body(pacienteService.cadastrarPaciente(request));
+				.created(uri)
+				.body(paciente);
 	}
 
 	@GetMapping
@@ -41,7 +49,14 @@ public class PacienteController {
 		return ResponseEntity.ok(pacienteService.listarPacientes(pageable));
 	}
 
+	@GetMapping("/{cpf}")
+	public ResponseEntity<PacienteResponse> getPaciente(@PathVariable String cpf) {
+		return ResponseEntity
+				.ok(new PacienteResponse(pacienteService.buscarPeloId(cpf)));
+	}
+
 	@DeleteMapping("/{cpf}")
+	@Transactional
 	public ResponseEntity<Void> deletePaciente(@PathVariable String cpf) {
 		return ResponseEntity
 				.status(HttpStatus.NO_CONTENT)
@@ -49,8 +64,8 @@ public class PacienteController {
 	}
 
 	@PutMapping("/{cpf}")
-	public ResponseEntity<PacienteResponse> putPaciente(@PathVariable String cpf,
-																											@RequestBody PacienteUpdateRequest request) {
+	@Transactional
+	public ResponseEntity<PacienteResponse> putPaciente(@PathVariable String cpf,@RequestBody @Valid PacienteUpdateRequest request) {
 		return ResponseEntity.ok(pacienteService.atualizarPaciente(cpf, request));
 	}
 

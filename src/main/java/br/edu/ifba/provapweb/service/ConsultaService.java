@@ -1,9 +1,12 @@
 package br.edu.ifba.provapweb.service;
 
-import java.time.DayOfWeek;
-import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.List;
 
+import br.edu.ifba.provapweb.domain.dto.request.ConsultaCancelamentoRequest;
+import br.edu.ifba.provapweb.domain.dto.response.ConsultaResponse;
+import br.edu.ifba.provapweb.domain.exceptions.ResourceBadRequestException;
+import br.edu.ifba.provapweb.domain.validador.agendamento.ValidadorAgendamentoConsultar;
+import br.edu.ifba.provapweb.domain.validador.cancelamento.ValidadorCancelamentoConsulta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +15,6 @@ import br.edu.ifba.provapweb.domain.entity.Consulta;
 import br.edu.ifba.provapweb.domain.entity.Medico;
 import br.edu.ifba.provapweb.domain.entity.Paciente;
 import br.edu.ifba.provapweb.repository.ConsultaRepository;
-import br.edu.ifba.provapweb.repository.MedicoRepository;
-import br.edu.ifba.provapweb.repository.PacienteRepository;
 
 @Service
 public class ConsultaService {
@@ -22,45 +23,47 @@ public class ConsultaService {
 	private ConsultaRepository consultaRepository;
 
 	@Autowired
-	private PacienteRepository pacienteRepository;
+	private PacienteService pacienteService;
 
 	@Autowired
-	private MedicoRepository medicoRepository;
+	private MedicoService medicoService;
 
-	public Void cadastrarConsulta(ConsultaCreateRequest request) {
+	@Autowired
+	private List<ValidadorAgendamentoConsultar> validadores;
 
-		LocalDateTime time = request.dataHoraConsulta();
-		if (!isValidTime(time) || !isValidDay(time)) {
-			return null;
+	@Autowired
+	private List<ValidadorCancelamentoConsulta> validadoresCancelamento;
+
+	public ConsultaResponse cadastrarConsulta(ConsultaCreateRequest request) {
+
+		Paciente paciente = pacienteService.buscarPeloId(request.pacienteCpf());
+		Medico medico = adicionarMedico(request);
+
+		validadores.forEach(v -> v.validar(request));
+
+		Consulta entity = new Consulta(null, paciente, medico, request.dataHoraConsulta(),null);
+		entity = consultaRepository.save(entity);
+		return new ConsultaResponse(entity);
+	}
+
+	private Medico adicionarMedico(ConsultaCreateRequest request){
+		if(!request.medicoCrm().isEmpty()){
+			Medico medico = medicoService.buscarPeloId(request.medicoCrm());
+		}
+		return medicoService.MedicoDisponivelPelaData(request.dataHoraConsulta());
+	}
+
+	public Void cancelar(ConsultaCancelamentoRequest request) {
+		if (!consultaRepository.existsById(request.consultaId())) {
+			throw new ResourceBadRequestException("Id da consulta informado não existe!");
 		}
 
-		Optional<Paciente> optionalPaciente = pacienteRepository.findById(request.pacienteCpf());
-		if (optionalPaciente.isEmpty() || !optionalPaciente
-				.get()
-				.isAtivo()) {
-			return null;
-		}
-		Paciente paciente = optionalPaciente.get();
+		validadoresCancelamento.forEach(v -> v.validar(request));
 
-		Optional<Medico> optionalMedico = medicoRepository.findById(request.medicoCrm());
-		if (optionalMedico.isEmpty() || !optionalMedico
-				.get()
-				.isAtivo()) {
-			return null;
-		}
-		Medico medico = optionalMedico.get();
-
-		Consulta entity = new Consulta(null, paciente, medico, time);
-		consultaRepository.save(entity);
+		Consulta consulta = consultaRepository.getReferenceById(request.consultaId());
+		consulta.setMotivoCancelamento(request.motivo());
+		consultaRepository.save(consulta);
 		return null;
 	}
 
-	private boolean isValidDay(LocalDateTime time) {
-		return time.getDayOfWeek() == DayOfWeek.SUNDAY;
-	}
-
-	private boolean isValidTime(LocalDateTime request) {
-		return request.getHour() < 7 ||
-				request.getHour() > 19;
-	}
 }

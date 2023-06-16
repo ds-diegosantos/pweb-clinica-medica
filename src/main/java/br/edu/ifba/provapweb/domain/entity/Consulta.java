@@ -2,11 +2,8 @@ package br.edu.ifba.provapweb.domain.entity;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import br.edu.ifba.provapweb.domain.util.MotivoCancelamento;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +23,9 @@ public class Consulta {
 	private Paciente paciente;
 	@ManyToOne
 	private Medico medico;
-	private LocalDateTime dataHoraConsulta;
+	private LocalDateTime data;
+
+	@Enumerated(EnumType.STRING)
+	private MotivoCancelamento motivoCancelamento;
 
 }

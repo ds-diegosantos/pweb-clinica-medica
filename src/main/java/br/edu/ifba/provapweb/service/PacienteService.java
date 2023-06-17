@@ -1,5 +1,7 @@
 package br.edu.ifba.provapweb.service;
 
+import br.edu.ifba.provapweb.domain.entity.Endereco;
+import br.edu.ifba.provapweb.domain.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,36 +19,34 @@ public class PacienteService {
 	@Autowired
 	private PacienteRepository pacienteRepository;
 
-	public Void cadastrarPaciente(PacienteCreateRequest request) {
-		pacienteRepository.save(new Paciente(request));
-		return null;
+	public PacienteResponse cadastrarPaciente(PacienteCreateRequest request) {
+		Paciente paciente = pacienteRepository.save(new Paciente(request));
+		return new PacienteResponse(paciente);
 	}
 
 	public Page<PacienteResponse> listarPacientes(Pageable pageable) {
 		return pacienteRepository
-				.findAll(pageable)
+				.findAllByAtivoTrue(pageable)
 				.map(PacienteResponse::new);
 	}
 
+	public Paciente buscarPeloId(String cpf){
+		return pacienteRepository.findByCpfAndAtivoTrue(cpf).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com o CPF: " + cpf));
+	}
+
 	public Void deletarPaciente(String cpf) {
-		pacienteRepository
-				.findById(cpf)
-				.ifPresent(paciente -> {
-					paciente.setAtivo(false);
-					pacienteRepository.save(paciente);
-				});
+		Paciente paciente = buscarPeloId(cpf);
+		paciente.setAtivo(false);
+		pacienteRepository.save(paciente);
 		return null;
 	}
 
 	public PacienteResponse atualizarPaciente(String cpf, PacienteUpdateRequest request) {
-		return pacienteRepository
-				.findById(cpf)
-				.map(paciente -> {
-					paciente.setNome(request.nome());
-					paciente.setTelefone(request.telefone());
-					pacienteRepository.save(paciente);
-					return new PacienteResponse(paciente);
-				})
-				.orElse(null);
+		Paciente paciente = buscarPeloId(cpf);
+		paciente.setNome(request.nome());
+		paciente.setTelefone(request.telefone());
+		paciente.setEndereco(new Endereco(request.endereco()));
+		pacienteRepository.save(paciente);
+		return new PacienteResponse(paciente);
 	}
 }

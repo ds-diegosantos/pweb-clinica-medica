@@ -2,16 +2,17 @@ package br.edu.ifba.provapweb.domain.dto.request;
 
 import java.util.Objects;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record EnderecoRequest(
-		@NotNull(message = "O campo 'logradouro' não pode ser nulo") String logradouro,
+		@NotBlank(message = "O campo 'logradouro' não pode ser nulo ou vazio") String logradouro,
 		String numero,
 		String complemento,
-		@NotNull(message = "O campo 'bairro' não pode ser nulo") String bairro,
-		@NotNull(message = "O campo 'cidade' não pode ser nulo") String cidade,
-		@NotNull(message = "O campo 'uf' não pode ser nulo") String uf,
-		@NotNull(message = "O campo 'cep' não pode ser nulo") String cep
+		@NotBlank(message = "O campo 'bairro' não pode ser nulo ou vazio") String bairro,
+		@NotBlank(message = "O campo 'cidade' não pode ser nulo ou vazio") String cidade,
+		@NotBlank(message = "O campo 'uf' não pode ser nulo ou vazio") String uf,
+		@NotBlank(message = "O campo 'cep' não pode ser nulo ou vazio") String cep
 ) {
 
 	public EnderecoRequest {

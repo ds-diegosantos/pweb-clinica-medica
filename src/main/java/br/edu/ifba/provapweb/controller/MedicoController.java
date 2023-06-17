@@ -21,6 +21,7 @@ import br.edu.ifba.provapweb.domain.dto.response.MedicoResponse;
 import br.edu.ifba.provapweb.service.MedicoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping(path = "/medico")
@@ -30,16 +31,24 @@ public class MedicoController {
 	private MedicoService medicoService;
 
 	@PostMapping
-	public ResponseEntity<Void> postMedico(@RequestBody @Valid MedicoCreateRequest dto) {
+	@Transactional
+	public ResponseEntity<MedicoResponse> postMedico(@RequestBody @Valid MedicoCreateRequest request, UriComponentsBuilder uriBuilder) {
+		var medico = medicoService.cadastrarMedico(request);
+		var uri = uriBuilder.path("/medico/{crm}").buildAndExpand(medico.crm()).toUri();
 		return ResponseEntity
-				.status(HttpStatus.CREATED)
-				.body(medicoService.cadastrarMedico(dto));
+				.created(uri)
+				.body(medico);
 	}
 
 	@GetMapping
 	public ResponseEntity<Page<MedicoResponse>> getMedicos(
 			@PageableDefault(sort = {"nome"}, page = 0, size = 10) Pageable pageable) {
 		return ResponseEntity.ok(medicoService.listarMedicos(pageable));
+	}
+
+	@GetMapping ("/{crm}")
+	public ResponseEntity<MedicoResponse> getMedico(@PathVariable String crm) {
+		return ResponseEntity.ok( new MedicoResponse(medicoService.buscarPeloId(crm)));
 	}
 
 	@DeleteMapping("/{crm}")
@@ -52,8 +61,7 @@ public class MedicoController {
 
 	@PutMapping("/{crm}")
 	@Transactional
-	public ResponseEntity<MedicoResponse> putMedico(@PathVariable String crm,
-																									@RequestBody MedicoUpdateRequest request) {
+	public ResponseEntity<MedicoResponse> putMedico(@PathVariable String crm,@RequestBody @Valid MedicoUpdateRequest request) {
 		return ResponseEntity.ok(medicoService.atualizarMedico(crm.toUpperCase(), request));
 	}
 }

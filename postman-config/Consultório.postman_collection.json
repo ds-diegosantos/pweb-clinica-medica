@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ddb4c6f3-2ef9-43d1-9b05-0daea0216e40",
+		"_postman_id": "6d0781c6-8448-4f3d-9a91-6754b3576be0",
 		"name": "Consultório",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "21798696"
+		"_exporter_id": "21078058"
 	},
 	"item": [
 		{
@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"crm\": \"c\",\r\n    \"nome\": \"claudio\",\r\n    \"telefone\": \"5464656\",\r\n    \"especialidade\": \"CARDIOLOGIA\",\r\n    \"email\": \"fulano@gmail.com\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"Rua dos bobos\",\r\n        \"numero\": \"0\",\r\n        \"complemento\": \"casa que não tem teto nem nada\",\r\n        \"bairro\": \"Idiotolândia\",\r\n        \"cidade\": \"\",\r\n        \"uf\": \"Imbecil\",\r\n        \"cep\": \"00000-000\"\r\n\r\n    }\r\n}",
+							"raw": "{\r\n\"nome\": \"Diego Santos\",\r\n\"email\": \"diego.santos@gmail.com\",\r\n\"crm\": \"123456\",\r\n\"especialidade\": \"ORTOPEDIA\",\r\n\"telefone\": \"00000-00000\",\r\n\"endereco\": {\r\n    \"logradouro\": \"rua 1\",\r\n    \"bairro\": \"bairro\",\r\n    \"cep\": \"12345678\",\r\n    \"cidade\": \"Salvador\",\r\n    \"uf\": \"BA\",\r\n    \"numero\": \"1\",\r\n    \"complemento\": \"complemento\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,10 +24,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/medico",
+							"raw": "localhost:8080/medico",
 							"host": [
-								"{{baseUrl}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"medico"
 							]
@@ -42,7 +43,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"dsadada\",\r\n    \"telefone\": \"5464656\"\r\n}",
+							"raw": "{\r\n    \"nome\": \"dsadada\",\r\n    \"telefone\": \"5464656\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"rua 1\",\r\n        \"bairro\": \"bairro\",\r\n        \"cep\": \"12345678\",\r\n        \"cidade\": \"Salvador\",\r\n        \"uf\": \"BA\",\r\n        \"numero\": \"1\",\r\n        \"complemento\": \"complemento\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -50,14 +51,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/medico/a",
+							"raw": "localhost:8080/medico/123456",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"medico",
-								"a"
+								"123456"
 							]
 						}
 					},
@@ -78,14 +79,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/medico/abcaaa",
+							"raw": "localhost:8080/medico/C",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"medico",
-								"abcaaa"
+								"C"
 							]
 						}
 					},
@@ -108,6 +109,25 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "recuperar medico",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/medico/C",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"medico",
+								"C"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -121,7 +141,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cpf\": \"asda\",\r\n    \"nome\": \"fulano\",\r\n    \"email\": \"fulano@gmail.com\",\r\n    \"telefone\": \"dadsadsada\"\r\n}",
+							"raw": "{\r\n    \"cpf\": \"asda\",\r\n    \"nome\": \"fulano\",\r\n    \"email\": \"fulano@gmail.com\",\r\n    \"telefone\": \"dadsadsada\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"rua 1\",\r\n        \"bairro\": \"bairro\",\r\n        \"cep\": \"12345678\",\r\n        \"cidade\": \"Salvador\",\r\n        \"uf\": \"BA\",\r\n        \"numero\": \"1\",\r\n        \"complemento\": \"complemento\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -148,7 +168,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"fulano\",\r\n    \"telefone\": \"dadsadsada\"\r\n}",
+							"raw": "{\r\n    \"nome\": \"fulano\",\r\n    \"telefone\": \"dadsadsada\",\r\n     \"endereco\": {\r\n        \"logradouro\": \"rua 1\",\r\n        \"bairro\": \"bairro\",\r\n        \"cep\": \"12345678\",\r\n        \"cidade\": \"Salvador\",\r\n        \"uf\": \"BA\",\r\n        \"numero\": \"1\",\r\n        \"complemento\": \"complemento\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -156,14 +176,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/paciente/asdab",
+							"raw": "localhost:8080/paciente/A",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"paciente",
-								"asdab"
+								"A"
 							]
 						}
 					},
@@ -184,14 +204,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/paciente/asdab",
+							"raw": "localhost:8080/paciente/A",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"paciente",
-								"asdab"
+								"A"
 							]
 						}
 					},
@@ -203,12 +223,32 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/paciente",
+							"raw": "localhost:8080/paciente",
 							"host": [
-								"{{baseUrl}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"paciente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recuperar paciente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/paciente/A",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"paciente",
+								"A"
 							]
 						}
 					},
@@ -220,13 +260,13 @@
 			"name": "Consulta",
 			"item": [
 				{
-					"name": "Cadastrar Consulta",
+					"name": "cancelarConsulta",
 					"request": {
-						"method": "POST",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"medicoCrm\" : \"a\",\r\n    \"pacienteCpf\": \"a\",\r\n    \"dataHoraConsulta\": \"2023-02-01T07:00\"\r\n\r\n}",
+							"raw": "{\r\n    \"consultaId\": 2,\r\n    \"motivo\": \"PACIENTE_DESISTIU\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -234,10 +274,38 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/consulta",
+							"raw": "localhost:8080/consulta",
 							"host": [
-								"{{baseUrl}}"
+								"localhost"
 							],
+							"port": "8080",
+							"path": [
+								"consulta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consulta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"medicoCrm\" : \"\",\r\n    \"pacienteCpf\": \"C\",\r\n    \"dataHoraConsulta\": \"2023-06-20T11:00\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/consulta",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
 							"path": [
 								"consulta"
 							]

@@ -2,6 +2,7 @@ package br.edu.ifba.provapweb.controller;
 
 import br.edu.ifba.provapweb.domain.dto.response.ErroResponse;
 import br.edu.ifba.provapweb.domain.exceptions.ResourceBadRequestException;
+import br.edu.ifba.provapweb.domain.exceptions.ResourceConflictException;
 import br.edu.ifba.provapweb.domain.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -48,5 +49,15 @@ public class ExceptionController {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(erroResponse);
     }
+
+    @ExceptionHandler(ResourceConflictException.class)
+    public ResponseEntity<?> handleResourceConflictException(ResourceConflictException rnfe, HttpServletRequest request) {
+        ErroResponse erroResponse = new ErroResponse("Recurso resultou em um conflito", rnfe.getMessage(),  new Date().getTime());
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(erroResponse);
+    }
+
+
 
 }

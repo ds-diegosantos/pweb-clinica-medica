@@ -14,7 +14,7 @@ public class ValidadorMedicoConsultaMesmoHorario implements ValidadorAgendamento
 
     @Override
     public void validar(ConsultaCreateRequest request) {
-        if(repository.existsByMedicoCrmAndData(request.medicoCrm(),request.dataHoraConsulta())){
+        if(repository.existsByMedicoCrmAndDataAndMotivoCancelamentoIsNull(request.medicoCrm(),request.dataHoraConsulta())){
             throw new ResourceBadRequestException("Médico ja possui outra consulta agendada nesse mesmo horário");
         }
     }

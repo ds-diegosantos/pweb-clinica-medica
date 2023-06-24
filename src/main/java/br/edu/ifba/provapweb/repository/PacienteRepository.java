@@ -11,7 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente, String> {
-    Page<Paciente> findAllByAtivoTrue(Pageable pageable);
-
-    Optional<Paciente> findByCpfAndAtivoTrue(String cpf);
+    Page<Paciente> findAllByAtivo(Pageable pageable, boolean ativo);
 }

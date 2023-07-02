@@ -18,7 +18,7 @@ public class ValidadorPacienteConsultaMesmoDia implements ValidadorAgendamentoCo
     public void validar(ConsultaCreateRequest request) {
         LocalDateTime primeiroHorario = request.dataHoraConsulta().withHour(7);
         LocalDateTime ultimoHorario = request.dataHoraConsulta().withHour(18);
-        Boolean pacientePossuiOutraConsultaNoDia = repository.existsByPacienteCpfAndDataBetween(request.pacienteCpf(),primeiroHorario,ultimoHorario);
+        Boolean pacientePossuiOutraConsultaNoDia = repository.existsBymotivoCancelamentoNullAndPacienteCpfAndDataBetween(request.pacienteCpf(),primeiroHorario,ultimoHorario);
 
         if(pacientePossuiOutraConsultaNoDia){
             throw new ResourceBadRequestException("Paciente já possui uma consulta agendada nesse dia");

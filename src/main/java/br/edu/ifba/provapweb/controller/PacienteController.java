@@ -46,7 +46,13 @@ public class PacienteController {
 	@GetMapping
 	public ResponseEntity<Page<PacienteResponse>> getPacientes(
 			@PageableDefault(page = 0, size = 10, sort = "nome", direction = Direction.ASC) Pageable pageable) {
-		return ResponseEntity.ok(pacienteService.listarPacientes(pageable));
+		return ResponseEntity.ok(pacienteService.listarPacientes(pageable,true));
+	}
+
+	@GetMapping("/inativo")
+	public ResponseEntity<Page<PacienteResponse>> getPacientesInativos(
+			@PageableDefault(page = 0, size = 10, sort = "nome", direction = Direction.ASC) Pageable pageable) {
+		return ResponseEntity.ok(pacienteService.listarPacientes(pageable,false));
 	}
 
 	@GetMapping("/{cpf}")
@@ -67,6 +73,14 @@ public class PacienteController {
 	@Transactional
 	public ResponseEntity<PacienteResponse> putPaciente(@PathVariable String cpf,@RequestBody @Valid PacienteUpdateRequest request) {
 		return ResponseEntity.ok(pacienteService.atualizarPaciente(cpf, request));
+	}
+
+	@PutMapping("ativar/{cpf}")
+	@Transactional
+	public ResponseEntity<Void> ativarPaciente(@PathVariable String cpf) {
+		return ResponseEntity
+				.status(HttpStatus.NO_CONTENT)
+				.body(pacienteService.ativarPaciente(cpf));
 	}
 
 }

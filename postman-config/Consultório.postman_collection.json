@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"nome\": \"Diego Santos\",\r\n\"email\": \"diego.santos@gmail.com\",\r\n\"crm\": \"123456\",\r\n\"especialidade\": \"ORTOPEDIA\",\r\n\"telefone\": \"00000-00000\",\r\n\"endereco\": {\r\n    \"logradouro\": \"rua 1\",\r\n    \"bairro\": \"bairro\",\r\n    \"cep\": \"12345678\",\r\n    \"cidade\": \"Salvador\",\r\n    \"uf\": \"BA\",\r\n    \"numero\": \"1\",\r\n    \"complemento\": \"complemento\"\r\n    }\r\n}",
+							"raw": "{\r\n\"nome\": \"Aluno ifba\",\r\n\"email\": \"aluno.ifba@gmail.com\",\r\n\"crm\": \"123456\",\r\n\"especialidade\": \"ORTOPEDIA\",\r\n\"telefone\": \"00000-00000\",\r\n\"endereco\": {\r\n    \"logradouro\": \"rua 1\",\r\n    \"bairro\": \"bairro\",\r\n    \"cep\": \"12345678\",\r\n    \"cidade\": \"Salvador\",\r\n    \"uf\": \"BA\",\r\n    \"numero\": \"1\",\r\n    \"complemento\": \"complemento\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,7 +24,8 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/medico",
+							"raw": "http://localhost:8080/medico",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
@@ -51,13 +52,35 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/medico/123456",
+							"raw": "http://localhost:8080/medico/123456",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"medico",
+								"123456"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ativar medico",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/medico/ativar/123456",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"medico",
+								"ativar",
 								"123456"
 							]
 						}
@@ -79,14 +102,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/medico/C",
+							"raw": "http://localhost:8080/medico/123456",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"medico",
-								"C"
+								"123456"
 							]
 						}
 					},
@@ -98,7 +122,8 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/medico",
+							"raw": "http://localhost:8080/medico",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
@@ -111,19 +136,39 @@
 					"response": []
 				},
 				{
-					"name": "recuperar medico",
+					"name": "Listar Medicos Inativos",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/medico/C",
+							"raw": "http://localhost:8080/medico/inativo",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"medico",
-								"C"
+								"inativo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recuperar medico",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/medico/123456",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"medico",
+								"123456"
 							]
 						}
 					},
@@ -141,7 +186,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cpf\": \"asda\",\r\n    \"nome\": \"fulano\",\r\n    \"email\": \"fulano@gmail.com\",\r\n    \"telefone\": \"dadsadsada\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"rua 1\",\r\n        \"bairro\": \"bairro\",\r\n        \"cep\": \"12345678\",\r\n        \"cidade\": \"Salvador\",\r\n        \"uf\": \"BA\",\r\n        \"numero\": \"1\",\r\n        \"complemento\": \"complemento\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"cpf\": \"123456\",\r\n    \"nome\": \"fulano\",\r\n    \"email\": \"fulano@gmail.com\",\r\n    \"telefone\": \"00000-00000\",\r\n    \"endereco\": {\r\n        \"logradouro\": \"rua 1\",\r\n        \"bairro\": \"bairro\",\r\n        \"cep\": \"12345678\",\r\n        \"cidade\": \"Salvador\",\r\n        \"uf\": \"BA\",\r\n        \"numero\": \"1\",\r\n        \"complemento\": \"complemento\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -149,7 +194,8 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/paciente",
+							"raw": "http://localhost:8080/paciente",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
@@ -176,14 +222,35 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/paciente/A",
+							"raw": "http://localhost:8080/paciente/123456",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"paciente",
-								"A"
+								"123456"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ativar Paciente",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/paciente/ativar/123456",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"paciente",
+								"ativar",
+								"123456"
 							]
 						}
 					},
@@ -204,14 +271,15 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/paciente/A",
+							"raw": "http://localhost:8080/paciente/123456",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"paciente",
-								"A"
+								"123456"
 							]
 						}
 					},
@@ -223,7 +291,8 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/paciente",
+							"raw": "http://localhost:8080/paciente",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
@@ -236,19 +305,40 @@
 					"response": []
 				},
 				{
-					"name": "Recuperar paciente",
+					"name": "Listar Pacientes Inativos",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/paciente/A",
+							"raw": "http://localhost:8080/paciente/inativo",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"paciente",
-								"A"
+								"inativo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recuperar paciente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/paciente/123456",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"paciente",
+								"123456"
 							]
 						}
 					},
@@ -266,7 +356,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"consultaId\": 2,\r\n    \"motivo\": \"PACIENTE_DESISTIU\"\r\n}",
+							"raw": "{\r\n    \"consultaId\": 1,\r\n    \"motivo\": \"PACIENTE_DESISTIU\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -274,7 +364,8 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/consulta",
+							"raw": "http://localhost:8080/consulta",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
@@ -293,7 +384,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"medicoCrm\" : \"\",\r\n    \"pacienteCpf\": \"C\",\r\n    \"dataHoraConsulta\": \"2023-06-20T11:00\"\r\n\r\n}",
+							"raw": "{\r\n    \"medicoCrm\" : \"A\",\r\n    \"pacienteCpf\": \"Z\",\r\n    \"dataHoraConsulta\": \"2023-06-26T17:00\"\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -301,7 +392,8 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/consulta",
+							"raw": "http://localhost:8080/consulta",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],

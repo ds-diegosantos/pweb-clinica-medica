@@ -1,6 +1,8 @@
 package br.edu.ifba.provapweb.service;
 
 import br.edu.ifba.provapweb.domain.entity.Endereco;
+import br.edu.ifba.provapweb.domain.exceptions.ResourceBadRequestException;
+import br.edu.ifba.provapweb.domain.exceptions.ResourceConflictException;
 import br.edu.ifba.provapweb.domain.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,18 +23,26 @@ public class MedicoService {
 	private MedicoRepository medicoRepository;
 
 	public MedicoResponse cadastrarMedico(MedicoCreateRequest dto) {
+		if(medicoRepository.existsById(dto.crm()))
+			throw new ResourceConflictException("Já existe outro médico com o crm informado!");
+
 		Medico medico = medicoRepository.save(new Medico(dto));
 		return new MedicoResponse(medico);
 	}
 
-	public Page<MedicoResponse> listarMedicos(Pageable pageable) {
+	public Page<MedicoResponse> listarMedicos(Pageable pageable, boolean ativo) {
 		return medicoRepository
-				.findAllByAtivoTrue(pageable)
+				.findAllByAtivo(pageable,ativo)
 				.map(MedicoResponse::new);
 	}
 
 	public Medico buscarPeloId(String crm){
-		return medicoRepository.findByCrmAndAtivoTrue(crm).orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com o CRM: " + crm));
+		Medico medico = medicoRepository.findById(crm).orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com o CRM: " + crm));
+
+		if(!medico.isAtivo())
+			throw new ResourceNotFoundException("Médico inativo com o CRM: " + crm);
+
+		return medico;
 	}
 
 	public Medico MedicoDisponivelPelaData(LocalDateTime data){
@@ -53,5 +63,12 @@ public class MedicoService {
 		medico.setEndereco(new Endereco(request.endereco()));
 		medicoRepository.save(medico);
 		return new MedicoResponse(medico);
+	}
+
+	public Void AtivarMedico(String crm){
+		Medico medico =  medicoRepository.findById(crm).orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com o CRM: " + crm));
+		medico.setAtivo(true);
+		medicoRepository.save(medico);
+		return null;
 	}
 }

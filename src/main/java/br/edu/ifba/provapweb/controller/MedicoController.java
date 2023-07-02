@@ -43,7 +43,13 @@ public class MedicoController {
 	@GetMapping
 	public ResponseEntity<Page<MedicoResponse>> getMedicos(
 			@PageableDefault(sort = {"nome"}, page = 0, size = 10) Pageable pageable) {
-		return ResponseEntity.ok(medicoService.listarMedicos(pageable));
+		return ResponseEntity.ok(medicoService.listarMedicos(pageable,true));
+	}
+
+	@GetMapping("/inativo")
+	public ResponseEntity<Page<MedicoResponse>> getMedicosInativos(
+			@PageableDefault(sort = {"nome"}, page = 0, size = 10) Pageable pageable) {
+		return ResponseEntity.ok(medicoService.listarMedicos(pageable,false));
 	}
 
 	@GetMapping ("/{crm}")
@@ -63,5 +69,13 @@ public class MedicoController {
 	@Transactional
 	public ResponseEntity<MedicoResponse> putMedico(@PathVariable String crm,@RequestBody @Valid MedicoUpdateRequest request) {
 		return ResponseEntity.ok(medicoService.atualizarMedico(crm.toUpperCase(), request));
+	}
+
+	@PutMapping("ativar/{crm}")
+	@Transactional
+	public ResponseEntity<Void> ativaMedico(@PathVariable String crm) {
+		return ResponseEntity
+				.status(HttpStatus.NO_CONTENT)
+				.body(medicoService.AtivarMedico(crm));
 	}
 }

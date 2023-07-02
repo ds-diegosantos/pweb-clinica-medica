@@ -14,10 +14,8 @@ import java.util.Optional;
 
 @Repository
 public interface MedicoRepository extends JpaRepository<Medico, String> {
-    Page<Medico> findAllByAtivoTrue(Pageable pageable);
-    Optional<Medico> findByCrmAndAtivoTrue(String crm);
-
     @Query(value = "SELECT m FROM medico m WHERE m.ativo = TRUE AND m.id NOT IN (SELECT c.medico.id FROM Consulta c WHERE c.data = :data and c.motivoCancelamento is null) ORDER BY RAND() FETCH FIRST 1 ROW ONLY")
     Optional<Medico> medicoAleatorioLivreNaData(@Param("data") LocalDateTime data);
 
+    Page<Medico> findAllByAtivo(Pageable pageable, boolean ativo);
 }

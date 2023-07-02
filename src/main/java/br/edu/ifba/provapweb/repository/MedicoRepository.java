@@ -13,9 +13,13 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
-public interface MedicoRepository extends JpaRepository<Medico, String> {
+public interface MedicoRepository extends JpaRepository<Medico, Long> {
     @Query(value = "SELECT m FROM medico m WHERE m.ativo = TRUE AND m.id NOT IN (SELECT c.medico.id FROM Consulta c WHERE c.data = :data and c.motivoCancelamento is null) ORDER BY RAND() FETCH FIRST 1 ROW ONLY")
     Optional<Medico> medicoAleatorioLivreNaData(@Param("data") LocalDateTime data);
 
     Page<Medico> findAllByAtivo(Pageable pageable, boolean ativo);
+
+    boolean existsByCrm(String crm);
+
+    Optional<Medico> findByCrm(String crm);
 }

@@ -1,8 +1,9 @@
-INSERT INTO medico(crm, nome, email, telefone, especialidade, ativo) VALUES('A', 'ADELSON', 'ADELSON@GMAIL.COM', 'AAAAAA', 'CARDIOLOGIA', true);
-INSERT INTO medico(crm, nome, email, telefone, especialidade, ativo) VALUES('B', 'BERNARDO', 'BERNARDO@GMAIL.COM', 'AAAAAA', 'CARDIOLOGIA', true);
-INSERT INTO medico(crm, nome, email, telefone, especialidade, ativo) VALUES('Z', 'ZEBRA', 'ZEBRA@GMAIL.COM', 'AAAAAA', 'CARDIOLOGIA', true);
-INSERT INTO medico(crm, nome, email, telefone, especialidade, ativo) VALUES('C', 'CLAUDIO', 'CLAUDIO@GMAIL.COM', 'AAAAAA', 'CARDIOLOGIA', true);
-INSERT INTO paciente(cpf, nome, email, telefone, ativo) VALUES('A', 'ANDRE', 'ANDRE@EMAIL.COM', 'ASDSA', true);
-INSERT INTO paciente(cpf, nome, email, telefone, ativo) VALUES('Z', 'ZEBRA', 'ZEBRA@EMAIL.COM', 'ASDSA', true);
-INSERT INTO paciente(cpf, nome, email, telefone, ativo) VALUES('C', 'CARLOS', 'CARLOS@EMAIL.COM', 'ASDSA', true);
-INSERT INTO paciente(cpf, nome, email, telefone, ativo) VALUES('D', 'DUDA', 'DUDA@EMAIL.COM', 'ASDSA', true);
+INSERT INTO paciente (cpf, nome, email, telefone, logradouro, bairro, cep, numero, complemento, cidade, uf, ativo)
+VALUES ('1234567890', 'João', 'joao@example.com', '123456789', 'Rua A', 'Centro', '12345-000', '123', 'Apto 101', 'Cidade', 'UF', true),
+('1234567800', 'luiz', 'luiz@example.com', '123456789', 'Rua A', 'Centro', '12345-000', '123', 'Apto 101', 'Cidade', 'UF', true),
+('1234567810', 'Diego', 'diego@example.com', '123456789', 'Rua A', 'Centro', '12345-000', '123', 'Apto 101', 'Cidade', 'UF', true);
+
+INSERT INTO medico (crm, nome, email, telefone, especialidade, logradouro, bairro, cep, numero, complemento, cidade, uf, ativo)
+VALUES ('123456', 'Dr. João', 'joao@example.com', '123456789', 'CARDIOLOGIA', 'Rua A', 'Centro', '12345-000', '123', 'Apto 101', 'Cidade', 'UF', true),
+('123856', 'Dr. Luis', 'luis@example.com', '123456789', 'CARDIOLOGIA', 'Rua A', 'Centro', '12345-000', '123', 'Apto 101', 'Cidade', 'UF', true),
+('123756', 'Dr. danilo', 'danilo@example.com', '123456789', 'CARDIOLOGIA', 'Rua A', 'Centro', '12345-000', '123', 'Apto 101', 'Cidade', 'UF', true);

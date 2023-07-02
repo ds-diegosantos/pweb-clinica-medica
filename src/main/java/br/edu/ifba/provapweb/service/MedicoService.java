@@ -23,7 +23,7 @@ public class MedicoService {
 	private MedicoRepository medicoRepository;
 
 	public MedicoResponse cadastrarMedico(MedicoCreateRequest dto) {
-		if(medicoRepository.existsById(dto.crm()))
+		if(medicoRepository.existsByCrm(dto.crm()))
 			throw new ResourceConflictException("Já existe outro médico com o crm informado!");
 
 		Medico medico = medicoRepository.save(new Medico(dto));
@@ -37,10 +37,10 @@ public class MedicoService {
 	}
 
 	public Medico buscarPeloId(String crm){
-		Medico medico = medicoRepository.findById(crm).orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com o CRM: " + crm));
+		Medico medico = medicoRepository.findByCrm(crm).orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado crm: " + crm));
 
 		if(!medico.isAtivo())
-			throw new ResourceNotFoundException("Médico inativo com o CRM: " + crm);
+			throw new ResourceNotFoundException("Médico inativo com o CRM: " + medico.getCrm());
 
 		return medico;
 	}
@@ -56,8 +56,8 @@ public class MedicoService {
 		return null;
 	}
 
-	public MedicoResponse atualizarMedico(String crm, MedicoUpdateRequest request) {
-		Medico medico = buscarPeloId(crm);
+	public MedicoResponse atualizarMedico(Long id, MedicoUpdateRequest request) {
+		Medico medico = medicoRepository.findById(id).get();
 		medico.setNome(request.nome());
 		medico.setTelefone(request.telefone());
 		medico.setEndereco(new Endereco(request.endereco()));
@@ -66,7 +66,7 @@ public class MedicoService {
 	}
 
 	public Void AtivarMedico(String crm){
-		Medico medico =  medicoRepository.findById(crm).orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado com o CRM: " + crm));
+		Medico medico = medicoRepository.findByCrm(crm).orElseThrow(() -> new ResourceNotFoundException("Médico não encontrado crm: " + crm));
 		medico.setAtivo(true);
 		medicoRepository.save(medico);
 		return null;

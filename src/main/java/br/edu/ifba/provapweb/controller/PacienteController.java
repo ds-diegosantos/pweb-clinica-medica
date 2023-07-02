@@ -69,10 +69,10 @@ public class PacienteController {
 				.body(pacienteService.deletarPaciente(cpf));
 	}
 
-	@PutMapping("/{cpf}")
+	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<PacienteResponse> putPaciente(@PathVariable String cpf,@RequestBody @Valid PacienteUpdateRequest request) {
-		return ResponseEntity.ok(pacienteService.atualizarPaciente(cpf, request));
+	public ResponseEntity<PacienteResponse> putPaciente(@PathVariable Long id,@RequestBody @Valid PacienteUpdateRequest request) {
+		return ResponseEntity.ok(pacienteService.atualizarPaciente(id, request));
 	}
 
 	@PutMapping("ativar/{cpf}")

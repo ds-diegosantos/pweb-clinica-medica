@@ -3,11 +3,14 @@ package br.edu.ifba.provapweb.service;
 import java.util.List;
 
 import br.edu.ifba.provapweb.domain.dto.request.ConsultaCancelamentoRequest;
+import br.edu.ifba.provapweb.domain.dto.response.ConsultaCanceladaResponse;
 import br.edu.ifba.provapweb.domain.dto.response.ConsultaResponse;
 import br.edu.ifba.provapweb.domain.exceptions.ResourceBadRequestException;
 import br.edu.ifba.provapweb.domain.validador.agendamento.ValidadorAgendamentoConsultar;
 import br.edu.ifba.provapweb.domain.validador.cancelamento.ValidadorCancelamentoConsulta;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifba.provapweb.domain.dto.request.ConsultaCreateRequest;
@@ -44,6 +47,14 @@ public class ConsultaService {
 		Consulta entity = new Consulta(null, paciente, medico, request.dataHoraConsulta(),null);
 		entity = consultaRepository.save(entity);
 		return new ConsultaResponse(entity);
+	}
+
+	public Page<ConsultaResponse> listarConsulta(Pageable pageable) {
+		return consultaRepository.findAllByMotivoCancelamentoIsNull(pageable).map(ConsultaResponse::new);
+	}
+
+	public Page<ConsultaCanceladaResponse> listarConsultaCancelada(Pageable pageable) {
+		return consultaRepository.findAllByMotivoCancelamentoIsNotNull(pageable).map(ConsultaCanceladaResponse::new);
 	}
 
 	private Medico adicionarMedico(ConsultaCreateRequest request){

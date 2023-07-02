@@ -10,6 +10,10 @@ import br.edu.ifba.provapweb.domain.entity.Paciente;
 import java.util.Optional;
 
 @Repository
-public interface PacienteRepository extends JpaRepository<Paciente, String> {
+public interface PacienteRepository extends JpaRepository<Paciente, Long> {
     Page<Paciente> findAllByAtivo(Pageable pageable, boolean ativo);
+
+    Optional<Paciente> findByCpf(String cpf);
+
+    boolean existsByCpf(String cpf);
 }

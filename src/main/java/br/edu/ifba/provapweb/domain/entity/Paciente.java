@@ -1,9 +1,7 @@
 package br.edu.ifba.provapweb.domain.entity;
 
 import br.edu.ifba.provapweb.domain.dto.request.PacienteCreateRequest;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +15,9 @@ import lombok.Setter;
 public class Paciente {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Column(unique = true)
 	private String cpf;
 	private String nome;
 	private String email;
@@ -26,10 +27,10 @@ public class Paciente {
 	private boolean ativo;
 
 	public Paciente(PacienteCreateRequest request) {
-		this(request.cpf(), request.nome(), request.email(), request.telefone(), new Endereco(request.endereco()));
+		this(null,request.cpf(), request.nome(), request.email(), request.telefone(), new Endereco(request.endereco()), true);
 	}
 
 	public Paciente(String cpf, String nome, String email, String telefone, Endereco endereco) {
-		this(cpf, nome, email, telefone,endereco ,true);
+		this(null,cpf, nome, email, telefone,endereco ,true);
 	}
 }

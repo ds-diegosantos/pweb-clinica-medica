@@ -22,7 +22,7 @@ public class PacienteService {
 
 	public PacienteResponse cadastrarPaciente(PacienteCreateRequest request) {
 
-		if(pacienteRepository.existsById(request.cpf()))
+		if(pacienteRepository.existsByCpf(request.cpf()))
 			throw new ResourceConflictException("Já existe outro paciente com o cpf informado!");
 
 		Paciente paciente = pacienteRepository.save(new Paciente(request));
@@ -32,11 +32,11 @@ public class PacienteService {
 	public Page<PacienteResponse> listarPacientes(Pageable pageable, boolean ativo) {
 		return pacienteRepository
 				.findAllByAtivo(pageable,ativo)
-				.map(PacienteResponse::new);
+				.map(e -> new PacienteResponse(e));
 	}
 
 	public Paciente buscarPeloId(String cpf){
-		Paciente paciente = pacienteRepository.findById(cpf).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com o CPF: " + cpf));
+		Paciente paciente = pacienteRepository.findByCpf(cpf).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com o CPF: " + cpf));
 
 		if(!paciente.isAtivo())
 			throw new ResourceNotFoundException("Paciente inativo com o CPF: " + cpf);
@@ -51,8 +51,8 @@ public class PacienteService {
 		return null;
 	}
 
-	public PacienteResponse atualizarPaciente(String cpf, PacienteUpdateRequest request) {
-		Paciente paciente = buscarPeloId(cpf);
+	public PacienteResponse atualizarPaciente(Long id, PacienteUpdateRequest request) {
+		Paciente paciente = pacienteRepository.findById(id).get();
 		paciente.setNome(request.nome());
 		paciente.setTelefone(request.telefone());
 		paciente.setEndereco(new Endereco(request.endereco()));
@@ -61,7 +61,7 @@ public class PacienteService {
 	}
 
 	public Void ativarPaciente(String cpf){
-		Paciente paciente = pacienteRepository.findById(cpf).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com o CPF: " + cpf));
+		Paciente paciente = pacienteRepository.findByCpf(cpf).orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com o CPF: " + cpf));
 		paciente.setAtivo(true);
 		pacienteRepository.save(paciente);
 		return null;

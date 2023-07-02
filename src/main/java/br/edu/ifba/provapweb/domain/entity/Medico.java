@@ -14,8 +14,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Medico {
-
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Column(unique = true)
 	private String crm;
 	private String nome;
 	private String email;
@@ -27,6 +29,6 @@ public class Medico {
 	private boolean ativo;
 
 	public Medico(MedicoCreateRequest dto) {
-		this(dto.crm(), dto.nome(), dto.email(), dto.telefone(), dto.especialidade(),new Endereco(dto.endereco()),true);
+		this(null,dto.crm(), dto.nome(), dto.email(), dto.telefone(), dto.especialidade(),new Endereco(dto.endereco()),true);
 	}
 }

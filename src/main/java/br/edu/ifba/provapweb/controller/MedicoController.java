@@ -65,10 +65,10 @@ public class MedicoController {
 				.body(medicoService.deletarMedico(crm));
 	}
 
-	@PutMapping("/{crm}")
+	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<MedicoResponse> putMedico(@PathVariable String crm,@RequestBody @Valid MedicoUpdateRequest request) {
-		return ResponseEntity.ok(medicoService.atualizarMedico(crm.toUpperCase(), request));
+	public ResponseEntity<MedicoResponse> putMedico(@PathVariable Long id,@RequestBody @Valid MedicoUpdateRequest request) {
+		return ResponseEntity.ok(medicoService.atualizarMedico(id, request));
 	}
 
 	@PutMapping("ativar/{crm}")

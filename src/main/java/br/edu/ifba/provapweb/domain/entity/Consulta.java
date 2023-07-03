@@ -2,7 +2,7 @@ package br.edu.ifba.provapweb.domain.entity;
 
 import java.time.LocalDateTime;
 
-import br.edu.ifba.provapweb.domain.util.MotivoCancelamento;
+import br.edu.ifba.provapweb.domain.enums.MotivoCancelamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

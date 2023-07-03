@@ -1,7 +1,7 @@
 package br.edu.ifba.provapweb.domain.dto.response;
 
 import br.edu.ifba.provapweb.domain.entity.Consulta;
-import br.edu.ifba.provapweb.domain.util.MotivoCancelamento;
+import br.edu.ifba.provapweb.domain.enums.MotivoCancelamento;
 
 import java.time.LocalDateTime;
 

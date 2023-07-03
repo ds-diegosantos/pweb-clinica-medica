@@ -1,7 +1,6 @@
 package br.edu.ifba.provapweb.domain.dto.request;
 
-import br.edu.ifba.provapweb.domain.util.MotivoCancelamento;
-import jakarta.validation.constraints.NotBlank;
+import br.edu.ifba.provapweb.domain.enums.MotivoCancelamento;
 import jakarta.validation.constraints.NotNull;
 
 public record ConsultaCancelamentoRequest(

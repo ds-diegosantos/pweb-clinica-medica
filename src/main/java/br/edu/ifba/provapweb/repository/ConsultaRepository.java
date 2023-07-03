@@ -1,8 +1,6 @@
 package br.edu.ifba.provapweb.repository;
 
 import br.edu.ifba.provapweb.domain.entity.Consulta;
-import br.edu.ifba.provapweb.domain.entity.Medico;
-import br.edu.ifba.provapweb.domain.util.MotivoCancelamento;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

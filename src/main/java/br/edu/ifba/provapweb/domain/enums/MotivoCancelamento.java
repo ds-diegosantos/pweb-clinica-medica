@@ -1,4 +1,4 @@
-package br.edu.ifba.provapweb.domain.util;
+package br.edu.ifba.provapweb.domain.enums;
 
 public enum MotivoCancelamento {
     PACIENTE_DESISTIU,

@@ -59,7 +59,7 @@ public class ConsultaService {
 
 	private Medico adicionarMedico(ConsultaCreateRequest request){
 		if(!request.medicoCrm().isEmpty()){
-			Medico medico = medicoService.buscarPeloId(request.medicoCrm());
+			return medicoService.buscarPeloId(request.medicoCrm());
 		}
 		return medicoService.MedicoDisponivelPelaData(request.dataHoraConsulta());
 	}
